@@ -1,60 +1,60 @@
-# -*- coding: utf-8 -*-
-"""
-===================================
-定时调度模块
-===================================
+# -*- 编码：utf-8 -*-
+”“”
+=====================================
+定时模块
+=====================================
 
 职责：
-1. 支持每日定时执行股票分析
-2. 支持定时执行大盘复盘
+1.支持每日定时执行股票分析
+2.支持定时执行大盘复盘
 3. 优雅处理信号，确保可靠退出
 
 依赖：
-- schedule: 轻量级定时任务库
-"""
+- Schedule: 轻量级定时任务库
+”“”
 
-import logging
-import signal
-import sys
-import time
-import threading
-from datetime import datetime
-from typing import Callable, Optional
+导入日志记录
+输入信号
+导入系统
+导入时间
+导入线程
+从日期时间导入日期时间
+from输入import可调用，可选
 
-logger = logging.getLogger(__name__)
+记录器=记录。获取记录器（ __name__ ）
 
 
-class GracefulShutdown:
-    """
+类GracefulShutdown：
+    ”“”
     优雅退出处理器
     
-    捕获 SIGTERM/SIGINT 信号，确保任务完成后再退出
-    """
+    捕获SIGTERM/SIGINT信号，确保任务完成后再退出
+    ”“”
     
-    def __init__(self):
-        self.shutdown_requested = False
-        self._lock = threading.Lock()
+    def  __init__ (自我) :
+        自己。关闭请求=假
+        自己。_lock = 线程。锁（）
         
         # 注册信号处理器
-        signal.signal(signal.SIGINT, self._signal_handler)
-        signal.signal(signal.SIGTERM, self._signal_handler)
+        信号。信号（信号。SIGINT ，自我。_signal_handler ）
+        信号。信号（信号。SIGTERM ，自我。_signal_handler ）
     
-    def _signal_handler(self, signum, frame):
+    def_signal_handler  （自身，符号，框架）：
         """信号处理函数"""
-        with self._lock:
-            if not self.shutdown_requested:
-                logger.info(f"收到退出信号 ({signum})，等待当前任务完成...")
-                self.shutdown_requested = True
+        与自我。_锁：
+            如果 不是自己。关闭请求：
+                记录器。info ( f"收到退出信号 ( { signum } )，等待当前任务完成..." )
+                自己。关闭请求= True
     
-    @property
-    def should_shutdown(self) -> bool:
+    @财产
+    def  should_shutdown ( self ) -> bool:
         """检查是否应该退出"""
-        with self._lock:
-            return self.shutdown_requested
+        与自我。_锁：
+            返回自我。关闭请求
 
 
-class Scheduler:
-    """
+类调度器：
+    ”“”
     定时任务调度器
     
     基于 schedule 库实现，支持：
@@ -63,7 +63,7 @@ class Scheduler:
     - 优雅退出
     """
     
-    def __init__(self, schedule_time: str = "18:00"):
+    def __init__(self, schedule_time: str = "20:00"):
         """
         初始化调度器
         
@@ -152,9 +152,9 @@ class Scheduler:
 
 def run_with_schedule(
     task: Callable,
-    schedule_time: str = "18:00",
+    schedule_time: str = "20:00",
     run_immediately: bool = True
-):
+）：
     """
     便捷函数：使用定时调度运行任务
     
