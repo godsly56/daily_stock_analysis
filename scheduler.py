@@ -63,7 +63,7 @@ from输入import可调用，可选
     - 优雅退出
     """
     
-    def __init__(self, schedule_time: str = "20:00"):
+    def __init__(self, schedule_time: str = "18:00"):
         """
         初始化调度器
         
@@ -152,7 +152,7 @@ from输入import可调用，可选
 
 def run_with_schedule(
     task: Callable,
-    schedule_time: str = "20:00",
+    schedule_time: str = "18:00",
     run_immediately: bool = True
 ）：
     """
